@@ -6,7 +6,7 @@ import com.college.erp.entity.User;
 
 public interface AuthService {
 
-    User register(User user);
+    AuthResponse register(AuthRequest authRequest);
 
     AuthResponse login(AuthRequest request);
 }

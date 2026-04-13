@@ -2,8 +2,13 @@ package com.college.erp.service.impl;
 
 import com.college.erp.dto.AuthRequest;
 import com.college.erp.dto.AuthResponse;
+import com.college.erp.entity.Student;
+import com.college.erp.entity.Teacher;
 import com.college.erp.entity.User;
+import com.college.erp.entity.enums.Role;
 import com.college.erp.entity.enums.UserStatus;
+import com.college.erp.repository.StudentRepository;
+import com.college.erp.repository.TeacherRepository;
 import com.college.erp.repository.UserRepository;
 import com.college.erp.security.JwtUtil;
 import com.college.erp.service.AuthService;
@@ -20,15 +25,57 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
-    public User register(User user) {
+    public AuthResponse register(AuthRequest request) {
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setStatus(UserStatus.PENDING);
-        user.setCreatedAt(LocalDateTime.now());
+        // Check if user already exists
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
 
-        return userRepository.save(user);
+        User user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
+                .status(UserStatus.PENDING)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        User savedUser = userRepository.save(user);
+
+        // 🔥 AUTO CREATE STUDENT PROFILE
+        if (savedUser.getRole() == Role.STUDENT) {
+
+            Student student = Student.builder()
+                    .user(savedUser)
+                    .build();
+
+            studentRepository.save(student);
+        }
+
+        // 🔥 TEACHER AUTO CREATE
+        if (savedUser.getRole() == Role.TEACHER) {
+
+            teacherRepository.findByUserId(savedUser.getId())
+                    .ifPresent(t -> {
+                        throw new RuntimeException("Teacher already exists");
+                    });
+
+            Teacher teacher = Teacher.builder()
+                    .user(savedUser)
+                    .build();
+
+            teacherRepository.save(teacher);
+        }
+
+        return new AuthResponse(null, "User registered successfully",
+                savedUser.getEmail(),
+                savedUser.getRole(),
+                savedUser.getStatus());
     }
 
     @Override
