@@ -5,5 +5,6 @@ public enum Role {
     TEACHER,
     STUDENT,
     LIBRARIAN,
-    SUPPORT
+    SUPPORT,
+    PARENTS
 }
