@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ onLoginClick }: { onLoginClick?: () => void }) {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +14,7 @@ export default function Navbar() {
       </h1>
 
       <button
-        onClick={() => navigate("/login")}
+        onClick={() => (onLoginClick ? onLoginClick() : navigate("/login"))}
         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
         Login

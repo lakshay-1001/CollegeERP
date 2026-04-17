@@ -1,8 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
 export default function RoleSelection() {
-  const navigate = useNavigate();
-
   return (
     <div className="py-20 px-6 md:px-12 bg-gray-100 text-center">
       <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-10">
@@ -17,12 +13,9 @@ export default function RoleSelection() {
           <p className="text-gray-500 mt-2 text-sm">
             Access your classes and updates
           </p>
-          <button
-            onClick={() => navigate("/login?role=student")}
-            className="mt-4 w-full py-2 bg-blue-600 text-white rounded"
-          >
-            Login
-          </button>
+          <div className="mt-4 w-full py-2 rounded bg-blue-50 text-blue-800 text-sm">
+            Use the Login button above
+          </div>
         </div>
 
         {/* Teacher */}
@@ -31,12 +24,9 @@ export default function RoleSelection() {
           <p className="text-gray-500 mt-2 text-sm">
             Manage classes and communicate
           </p>
-          <button
-            onClick={() => navigate("/login?role=teacher")}
-            className="mt-4 w-full py-2 bg-green-600 text-white rounded"
-          >
-            Login
-          </button>
+          <div className="mt-4 w-full py-2 rounded bg-green-50 text-green-800 text-sm">
+            Use the Login button above
+          </div>
         </div>
 
         {/* Admin */}
@@ -45,12 +35,9 @@ export default function RoleSelection() {
           <p className="text-gray-500 mt-2 text-sm">
             System management and control
           </p>
-          <button
-            onClick={() => navigate("/admin")}
-            className="mt-4 w-full py-2 bg-gray-800 text-white rounded"
-          >
-            Open Panel
-          </button>
+          <div className="mt-4 w-full py-2 rounded bg-gray-100 text-gray-800 text-sm">
+            Use the Login button above
+          </div>
         </div>
 
       </div>
