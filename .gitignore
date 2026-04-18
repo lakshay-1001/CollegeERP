@@ -29,10 +29,30 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
 ### Frontend local overrides ###
 frontend/.env.local
 frontend/dist/
 frontend/node_modules/
+# ======================
+# FRONTEND
+# ======================
+frontend/node_modules/
+frontend/dist/
+
+# ======================
+# BACKEND
+# ======================
+target/
+
+# ======================
+# ENV & LOGS
+# ======================
+.env
+*.log
+
+# ======================
+# IDE FILES
+# ======================
+.vscode/
+.idea/
+*.iml
