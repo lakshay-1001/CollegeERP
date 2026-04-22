@@ -46,7 +46,7 @@ export default function AppRoutes() {
       <Route
         path="/teacher"
         element={
-          <ProtectedRoute allowedRoles={["TEACHER", "SUPPORT"]}>
+          <ProtectedRoute allowedRoles={["TEACHER", "SUPPORT"]}> // bith support and teacher will work on same endpoint because is a teacher role to talk with non students want to know about collage 
             <TeacherLayout />
           </ProtectedRoute>
         }
